@@ -2,17 +2,27 @@ pipeline {
     
     agent {
         label 'docker'
-        any {
-            image 'node:6-alpine'
-            args '-p 3000:3000'
-        }
     }
+    
     tools {nodejs "nodejs"}
      environment {
             CI = 'true'
             DOCKERHUB_CRED = credentials('CRED_DOCKER')
         }
     stages {
+        stage('Docker node test') {
+            agent {
+        
+                docker {
+                    label 'docker'
+                    image 'node:6-alpine'
+                    args '-p 3000:3000'
+                }
+            }
+            steps {
+                sh 'node --version'
+            }
+        }
         stage('Git Pull') {
             steps {
                 git url: 'https://github.com/gaparul/Scientific-Calculator.git', branch: 'master',
