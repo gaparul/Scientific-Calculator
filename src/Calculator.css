@@ -1,0 +1,33 @@
+.calculator > h1 {
+    color: var(--theme-color-dark-20);
+    text-transform: uppercase;
+}
+
+.calculator input {
+    height: 2.5rem;
+    width: 13rem;
+    padding: 0.4rem;
+    border: 1px solid white;
+    margin: 0.3rem 0.3rem 1.5rem 0.3rem;
+    font-size: 1.5rem;
+    color: var(--theme-color-dark-20);
+    box-shadow: 8px 8px 5px -7px var(--theme-color-dark-10);
+}
+
+.calculator button {
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: 1.5rem;
+    color: var(--theme-color-dark-20);
+}
+
+.calculator-buttons-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator-operators {
+    display: flex;
+    flex-direction: column;
+}
