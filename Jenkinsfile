@@ -14,7 +14,7 @@ pipeline {
         stage('Git Pull') {
             steps {
                 git url: 'https://github.com/gaparul/Scientific-Calculator.git', branch: 'master',
-                credentialdId: 'Credential_Git'
+                credentialsId: 'Credential_Git'
             }
         }
         stage('Build') {
