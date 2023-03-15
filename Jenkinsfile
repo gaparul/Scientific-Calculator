@@ -1,7 +1,12 @@
 pipeline {
     
     agent {
-        label 'docker'
+        
+        any {
+            label 'docker'
+            image 'node:6-alpine'
+            args '-p 3000:3000'
+        }
     }
     
     tools {nodejs "nodejs"}
@@ -10,19 +15,6 @@ pipeline {
             DOCKERHUB_CRED = credentials('CRED_DOCKER')
         }
     stages {
-        stage('Docker node test') {
-            agent {
-        
-                any {
-                    label 'docker'
-                    image 'node:6-alpine'
-                    args '-p 3000:3000'
-                }
-            }
-            steps {
-                sh 'node --version'
-            }
-        }
         stage('Git Pull') {
             steps {
                 git url: 'https://github.com/gaparul/Scientific-Calculator.git', branch: 'master',
@@ -43,13 +35,13 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t calculator-react .'
-                sh 'echo $DOCKERHUB_CRED_PSW | docker login -u $DOCKERHUB_CRED_USR --password-stdin'
+                sh '/usr/local/bin/docker build -t calculator-react .'
+                sh 'echo $DOCKERHUB_CRED_PSW | /usr/local/bin/docker login -u $DOCKERHUB_CRED_USR --password-stdin'
             }
         }
         stage('Push Image') {
             steps {
-                sh 'docker push calculator-react'
+                sh '/usr/local/bin/docker push calculator-react'
             }
         }
         // stage('Deliver') {
