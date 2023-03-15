@@ -36,11 +36,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 sh '/usr/local/bin/docker build -t calculator-react .'
-                sh 'echo $DOCKERHUB_CRED_PSW | /usr/local/bin/docker login -u $DOCKERHUB_CRED_USR --password-stdin'
+                
             }
         }
         stage('Push Image') {
             steps {
+                sh 'echo $DOCKERHUB_CRED_PSW | /usr/local/bin/docker login -u $DOCKERHUB_CRED_USR --password-stdin'
                 sh '/usr/local/bin/docker push calculator-react'
             }
         }
