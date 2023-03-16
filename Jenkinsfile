@@ -61,6 +61,12 @@ pipeline {
                 
             }
         }
+        stage('Deploy') {
+            steps {
+                ansiblePlaybook becomeUser: null, colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory',
+                 playbook: 'playbook.yml', sudoUser: null, extras: '-e "image_name=gaparul/scientific-calculator-react"'
+            }
+        }
         // stage('Deliver') {
         //     steps {
         //         sh 'chmod +x ./jenkins/scripts/deliver.sh'

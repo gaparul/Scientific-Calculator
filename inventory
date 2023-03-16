@@ -1,0 +1,2 @@
+[my-aws-instances]
+100.25.136.230 ansible_ssh_private_key_file=/Users/harsh/Downloads/react-jenkins-ansible.pem ansible_user=ec2-user

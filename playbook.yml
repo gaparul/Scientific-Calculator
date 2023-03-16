@@ -1,0 +1,16 @@
+
+---
+- name: Pull docker image of Calculator
+  hosts: all
+  tasks:
+
+    - name: Start docker service
+      service:
+        name: docker
+        state: started
+        
+    - name: pull docker image
+      shell: docker pull docker.io/gaparul/scientific-calculator-react
+      
+    - name: running container
+      shell: docker run -it -d gaparul/scientific-calculator-react
