@@ -41,12 +41,12 @@ pipeline {
         }
         stage('Push Image') {
             steps {
-                withDockerRegistry([credentialsId: 'CRED_DOCKER', url: '']){
-                    sh '/usr/local/bin/docker push gaparul/calculator-react:latest'
-                }
+                // withDockerRegistry([credentialsId: 'CRED_DOCKER', url: '']){
+                //     sh '/usr/local/bin/docker push gaparul/calculator-react:latest'
+                // }
                 // sh 'echo $DOCKERHUB_CRED_PSW | /usr/local/bin/docker login -u $DOCKERHUB_CRED_USR --password-stdin'
-                // sh '/usr/local/bin/docker login -u "gaparul" -p "Parul@191210"'
-                // sh '/usr/local/bin/docker push calculator-react'
+                sh '/usr/local/bin/docker login -u "gaparul" -p "Parul@191210"'
+                sh '/usr/local/bin/docker push gaparul/calculator-react:latest'
             }
         }
         // stage('Deliver') {
