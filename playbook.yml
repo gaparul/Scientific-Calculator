@@ -13,4 +13,4 @@
       shell: docker pull docker.io/gaparul/scientific-calculator-react:latest
       
     - name: running container
-      shell: docker run -it -d -p 8000:3000 gaparul/scientific-calculator-react:latest
+      shell: docker run -it -p 8000:3000 gaparul/scientific-calculator-react:latest

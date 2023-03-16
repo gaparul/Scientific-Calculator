@@ -1,11 +1,13 @@
 import React from "react";
 import { Fragment } from "react";
-import { evaluate } from "mathjs";
+import math, { evaluate } from "mathjs";
 
-import "./Calculator.css"
+import "./Calculator.css";
 
 const rows = [[7, 8, 9], [4, 5, 6], [1, 2, 3], [0]];
 const operators = ["+", "-", "x", "/"];
+const scientificOperators = ["sqrt", "log", "!", "^"];
+const others = ["(", ")","."]
 
 const equal = "=";
 const clear = "C";
@@ -15,6 +17,24 @@ const isNum = (s) => !isNaN(Number(s));
 
 export const calculateExpression = (expression) => {
   if (!expression || expression.length === 0) return;
+
+  if(expression.startsWith('sqrt')){
+    const res = evaluate(expression);
+    return res;
+  }
+
+  if(expression.startsWith('log')){
+    // const lnregex = /ln/;
+    // expression.replace("ln","log")
+    // console.log(expression)
+    const res = evaluate(expression);
+    return res;
+  }
+  if(lastChar(expression) === "!"){
+    expression = expression.slice(0,-1);
+    const res = evaluate(`factorial(${expression})`)
+    return res;
+  }
 
   const multiplyregex = /x/g;
   const divByZero = /\/0/g;
@@ -58,8 +78,6 @@ const Calculator = () => {
 
       <div className="calculator-buttons-container">
         <div role="grid">
-        
-        
           {rows.map((r, i) => {
             return (
               <Fragment key={String(r)}>
@@ -79,12 +97,31 @@ const Calculator = () => {
             );
           })}
         </div>
+        
+        <div className="scientific-operators">
+          {scientificOperators.map((so) => {
+            return (
+              <button onClick={() => setvalue(value.concat(so))} key={so}>
+                {String(so)}
+              </button>
+            );
+          })}
+        </div>
         <div className="calculator-operators">
           {operators.map((o) => (
             <button onClick={() => setvalue(value.concat(o))} key={o}>
               {String(o)}
             </button>
           ))}
+        </div>
+        <div className="other-operators">
+          {others.map((so) => {
+            return (
+              <button onClick={() => setvalue(value.concat(so))} key={so}>
+                {String(so)}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

@@ -30,6 +30,16 @@ describe('<Calculator/>', () => {
         });
     });
 
+    it('shows scientific operators', () => {
+        render(<Calculator/>);
+
+        const operators = ["sqrt", "log", "!", "^"];
+
+        operators.forEach((operator) => {
+            expect(screen.getByText(String(operator))).toBeInTheDocument();
+        });
+    });
+
     it('displays equal', () => {
         render(<Calculator/>)
 
@@ -112,6 +122,36 @@ describe('<Calculator/>', () => {
         fireEvent.click(one);
         fireEvent.click(plus);
         fireEvent.click(eight);
+        fireEvent.click(eq);
+
+        const res = await screen.findByPlaceholderText("calculate");
+
+        expect(res.value).toBe("9");
+    })
+
+    it('calculates an scientific expression', async () => {
+        render(<Calculator/>)
+
+        const sqrt = screen.getByText("sqrt")
+        const pow = screen.getByText("^")
+        const op = screen.getByText("(")
+        const cl = screen.getByText(")")
+        const one = screen.getByText("1")
+        const eight = screen.getByText("8")
+        const two = screen.getByText("2")
+        const plus = screen.getByText("+")
+        const eq = screen.getByText("=")
+
+        fireEvent.click(sqrt);
+        fireEvent.click(op);
+        fireEvent.click(op);
+        fireEvent.click(one);
+        fireEvent.click(plus);
+        fireEvent.click(eight);
+        fireEvent.click(cl);
+        fireEvent.click(pow);
+        fireEvent.click(two);
+        fireEvent.click(cl);
         fireEvent.click(eq);
 
         const res = await screen.findByPlaceholderText("calculate");
@@ -205,5 +245,17 @@ describe('Calculate Expression', () => {
     })
     it('empty expression', ()=> {
         expect(calculateExpression("")).toBe(undefined)
+    })
+    it('computes square root', () => {
+        expect(calculateExpression("sqrt(25)")).toBe(5);
+    })
+    it('computes x power y', ()=>{
+        expect(calculateExpression("3^2")).toBe(9);
+    })
+    it('computes natural log', ()=>{
+        expect(calculateExpression("log(3.5)")).toBe(1.252762968495368);
+    })
+    it('computes factorial', ()=>{
+        expect(calculateExpression("10!")).toBe(3628800);
     })
 });
