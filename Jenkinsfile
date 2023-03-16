@@ -12,7 +12,10 @@ pipeline {
     tools {nodejs "nodejs"}
      environment {
             CI = 'true'
+            registry = 'gaparul/scientific-calculator-react'
             DOCKERHUB_CRED = credentials('CRED_DOCKER')
+            registryCredential = 'CRED_DOCKER'
+            dockerimage = ''
         }
     stages {
         stage('Git Pull') {
@@ -35,18 +38,27 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh '/usr/local/bin/docker build -t gaparul/calculator-react:latest .'
+                script{
+                    // docker = sh '/usr/local/bin/docker'
+                    // dockerimage = docker.build registry + ":latest"
+                    dockerimage = sh '/usr/local/bin/docker build -t'+registry+':latest .'
+                }
+                
                 
             }
         }
-        stage('Push Image') {
+        stage('Push Image to dockerHub') {
             steps {
+                script{
+                    sh '/usr/local/bin/docker login -u "gaparul" -p "Parul@191210"'
+                    sh '/usr/local/bin/docker push ' +registry +':latest'
+                }
                 // withDockerRegistry([credentialsId: 'CRED_DOCKER', url: '']){
                 //     sh '/usr/local/bin/docker push gaparul/calculator-react:latest'
                 // }
                 // sh 'echo $DOCKERHUB_CRED_PSW | /usr/local/bin/docker login -u $DOCKERHUB_CRED_USR --password-stdin'
-                sh '/usr/local/bin/docker login -u "gaparul" -p "Parul@191210"'
-                sh '/usr/local/bin/docker push gaparul/calculator-react:latest'
+                
+                
             }
         }
         // stage('Deliver') {
