@@ -10,7 +10,7 @@
         state: started
         
     - name: pull docker image
-      shell: docker pull docker.io/gaparul/scientific-calculator-react
+      shell: docker pull docker.io/gaparul/scientific-calculator-react:latest
       
     - name: running container
       shell: docker run -p 8000:3000 gaparul/scientific-calculator-react:latest
