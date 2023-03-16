@@ -16,6 +16,7 @@ pipeline {
             DOCKERHUB_CRED = credentials('CRED_DOCKER')
             registryCredential = 'CRED_DOCKER'
             dockerimage = ''
+
         }
     stages {
         stage('Git Pull') {
@@ -63,8 +64,9 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                ansiblePlaybook becomeUser: null, colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory',
-                 playbook: 'playbook.yml', sudoUser: null, extras: '-e "image_name=gaparul/scientific-calculator-react"'
+                sh 'ansible-playbook playbook.yml -i inventory -e image_name=gaparul/scientific-calculator-react'
+                // ansiblePlaybook becomeUser: null, colorized: true, disableHostKeyChecking: true, installation: 'Ansible', inventory: 'inventory',
+                //  playbook: 'playbook.yml', sudoUser: null, extras: '-e "image_name=gaparul/scientific-calculator-react"'
             }
         }
         // stage('Deliver') {
