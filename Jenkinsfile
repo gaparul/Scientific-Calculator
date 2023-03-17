@@ -62,6 +62,12 @@ pipeline {
                 
             }
         }
+        stage('Free local space') {
+            steps {
+                sh '/usr/local/bin/docker rmi $registry:latest'
+            }
+        }
+
         stage('Deploy') {
             steps {
                 sh '/Users/harsh/Library/Python/3.9/bin/ansible-playbook playbook.yml -i inventory -e image_name=gaparul/scientific-calculator-react'
