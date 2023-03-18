@@ -1,6 +1,7 @@
 import React from "react";
 import { Fragment } from "react";
-import math, { evaluate } from "mathjs";
+import { evaluate } from "mathjs";
+import moment from "moment";
 
 import "./Calculator.css";
 
@@ -17,22 +18,37 @@ const isNum = (s) => !isNaN(Number(s));
 
 export const calculateExpression = (expression) => {
   if (!expression || expression.length === 0) return;
-
+  var logs = localStorage.getItem('logs')
   if(expression.startsWith('sqrt')){
     const res = evaluate(expression);
+    if (logs) {
+      logs = logs + moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    } else {
+      logs =  moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    }
+    localStorage.setItem('logs', logs);
     return res;
   }
 
   if(expression.startsWith('log')){
-    // const lnregex = /ln/;
-    // expression.replace("ln","log")
-    // console.log(expression)
     const res = evaluate(expression);
+    if (logs) {
+      logs = logs + moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    } else {
+      logs =  moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    }
+    localStorage.setItem('logs', logs);
     return res;
   }
   if(lastChar(expression) === "!"){
     expression = expression.slice(0,-1);
     const res = evaluate(`factorial(${expression})`)
+    if (logs) {
+      logs = logs + moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    } else {
+      logs =  moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    }
+    localStorage.setItem('logs', logs);
     return res;
   }
 
@@ -50,6 +66,12 @@ export const calculateExpression = (expression) => {
     if (!lastCharNum) evaluateExp = evaluateExp.slice(0, -1);
 
     const res = evaluate(evaluateExp);
+    if (logs) {
+      logs = logs + moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    } else {
+      logs =  moment().format()+" INFO "+ expression+ " result: " + res + "\n";
+    }
+    localStorage.setItem('logs', logs);
     return res;
   } catch (e) {
     console.error(e);
@@ -67,6 +89,15 @@ const Calculator = () => {
   const clearVal = () => setvalue("");
   const trimVal = () => setvalue(value.slice(0,-1));
 
+  const textFileCreation = () =>{
+    const element = document.createElement("a");
+    var logs = localStorage.getItem('logs');
+    const textFile = new Blob([logs ? logs : ''], {type: 'text/plain'}); //pass data from localStorage API to blob
+    element.href = URL.createObjectURL(textFile);
+    element.download = "userFile.log";
+    document.body.appendChild(element); 
+    element.click();
+  }
   return (
     <div className="calculator">
       <h1>Calculator</h1>
@@ -98,7 +129,7 @@ const Calculator = () => {
             );
           })}
         </div>
-        
+
         <div className="scientific-operators">
           {scientificOperators.map((so) => {
             return (
@@ -108,6 +139,7 @@ const Calculator = () => {
             );
           })}
         </div>
+
         <div className="calculator-operators">
           {operators.map((o) => (
             <button onClick={() => setvalue(value.concat(o))} key={o}>
@@ -115,27 +147,37 @@ const Calculator = () => {
             </button>
           ))}
         </div>
+
         <div className="other-operators">
           {others.map((so, i) => {
-            
             return (
               <Fragment key={String(so)}>
-              
-              {i===0 && <button onClick={() => setvalue(value.concat(so))} key={so}>
-                {String(so)}
-              </button>}
-              {i===1 && <button onClick={() => setvalue(value.concat(so))} key={so}>
-                {String(so)}
-              </button>}
-              {i===2 && <button onClick={() => setvalue(value.concat(so))} key={so}>
-                {String(so)}
-              </button>}
-              {i===3 &&  <button onClick={trimVal}>{String(so)}</button>}
+                {i === 0 && (
+                  <button onClick={() => setvalue(value.concat(so))} key={so}>
+                    {String(so)}
+                  </button>
+                )}
+                {i === 1 && (
+                  <button onClick={() => setvalue(value.concat(so))} key={so}>
+                    {String(so)}
+                  </button>
+                )}
+                {i === 2 && (
+                  <button onClick={() => setvalue(value.concat(so))} key={so}>
+                    {String(so)}
+                  </button>
+                )}
+                {i === 3 && <button onClick={trimVal}>{String(so)}</button>}
               </Fragment>
             );
-            
           })}
         </div>
+      </div>
+
+      <div className="download">
+        <button type="button" onClick={textFileCreation}>
+          <span>Download Logs</span>
+        </button>
       </div>
     </div>
   );
