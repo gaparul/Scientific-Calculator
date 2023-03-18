@@ -7,7 +7,7 @@ import "./Calculator.css";
 const rows = [[7, 8, 9], [4, 5, 6], [1, 2, 3], [0]];
 const operators = ["+", "-", "x", "/"];
 const scientificOperators = ["sqrt", "log", "!", "^"];
-const others = ["(", ")","."]
+const others = ["(", ")",".","<-"]
 
 const equal = "=";
 const clear = "C";
