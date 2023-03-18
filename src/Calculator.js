@@ -115,12 +115,24 @@ const Calculator = () => {
           ))}
         </div>
         <div className="other-operators">
-          {others.map((so) => {
+          {others.map((so, i) => {
+            
             return (
-              <button onClick={() => setvalue(value.concat(so))} key={so}>
+              <Fragment key={String(so)}>
+              
+              {i===0 && <button onClick={() => setvalue(value.concat(so))} key={so}>
                 {String(so)}
-              </button>
+              </button>}
+              {i===1 && <button onClick={() => setvalue(value.concat(so))} key={so}>
+                {String(so)}
+              </button>}
+              {i===2 && <button onClick={() => setvalue(value.concat(so))} key={so}>
+                {String(so)}
+              </button>}
+              {i===3 &&  <button onClick={trimVal}>{String(so)}</button>}
+              </Fragment>
             );
+            
           })}
         </div>
       </div>
