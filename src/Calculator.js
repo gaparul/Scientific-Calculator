@@ -65,6 +65,7 @@ const Calculator = () => {
   };
 
   const clearVal = () => setvalue("");
+  const trimVal = () => setvalue(value.slice(0,-1));
 
   return (
     <div className="calculator">
