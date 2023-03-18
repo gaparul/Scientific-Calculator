@@ -31,8 +31,10 @@ Ansible was used for configuration management, pulling the Docker image, and run
 - **Monitoring:** ELK Stack
     
     Using a log file for monitoring and passing it on the ELK Stack.
+    
+This project is completely deployed using CICD and works on EC2 endpoint.
   
-# Getting Started with Create React App
+### Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
