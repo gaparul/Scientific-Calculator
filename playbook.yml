@@ -13,3 +13,4 @@
       
     - name: running container
       shell: docker run -it -p 3000:3000 -d gaparul/scientific-calculator-react:latest
+      
