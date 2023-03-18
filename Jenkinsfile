@@ -15,8 +15,7 @@ pipeline {
             DOCKERHUB_CRED = credentials('CRED_DOCKER')
             registryCredential = 'CRED_DOCKER'
             dockerimage = ''
-
-        }
+      }
     stages {
         stage('Git Pull') {
             steps {
