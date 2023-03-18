@@ -7,7 +7,7 @@ import "./Calculator.css";
 const rows = [[7, 8, 9], [4, 5, 6], [1, 2, 3], [0]];
 const operators = ["+", "-", "x", "/"];
 const scientificOperators = ["sqrt", "log", "!", "^"];
-const others = ["(", ")","."]
+const others = ["(", ")",".","<-"]
 
 const equal = "=";
 const clear = "C";
@@ -65,6 +65,7 @@ const Calculator = () => {
   };
 
   const clearVal = () => setvalue("");
+  const trimVal = () => setvalue(value.slice(0,-1));
 
   return (
     <div className="calculator">
@@ -115,12 +116,24 @@ const Calculator = () => {
           ))}
         </div>
         <div className="other-operators">
-          {others.map((so) => {
+          {others.map((so, i) => {
+            
             return (
-              <button onClick={() => setvalue(value.concat(so))} key={so}>
+              <Fragment key={String(so)}>
+              
+              {i===0 && <button onClick={() => setvalue(value.concat(so))} key={so}>
                 {String(so)}
-              </button>
+              </button>}
+              {i===1 && <button onClick={() => setvalue(value.concat(so))} key={so}>
+                {String(so)}
+              </button>}
+              {i===2 && <button onClick={() => setvalue(value.concat(so))} key={so}>
+                {String(so)}
+              </button>}
+              {i===3 &&  <button onClick={trimVal}>{String(so)}</button>}
+              </Fragment>
             );
+            
           })}
         </div>
       </div>
