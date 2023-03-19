@@ -8,6 +8,7 @@ The goal of the project is to:
     - Power Function - (𝑎𝑏 )
 - Understand the entire Software Development Life Cycle on DevOps Principles
 
+
 ### Technology Stack used
 
 - **Development:** React js, NPM
